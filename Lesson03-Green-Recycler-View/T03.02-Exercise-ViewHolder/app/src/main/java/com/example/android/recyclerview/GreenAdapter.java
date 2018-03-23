@@ -118,10 +118,19 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
     }
 
     // TODO (12) Create a class called NumberViewHolder that extends RecyclerView.ViewHolder
+    class NumberViewHolder extends RecyclerView.ViewHolder{
 
     // TODO (13) Within NumberViewHolder, create a TextView variable called listItemNumberView
-
+        TextView listItemNumberView;
     // TODO (14) Create a constructor for NumberViewHolder that accepts a View called itemView as a parameter
+        public NumberViewHolder(View itemView) {
+            super(itemView);
+
+            listItemNumberView = (TextView) itemView.findViewById(R.id.tv_item_number);
+        }
+        void bind (int listIndex) {
+            listItemNumberView.setText(String.valueOf(listIndex));
+        }
     // TODO (15) Within the constructor, call super(itemView) and then find listItemNumberView by ID
 
     // TODO (16) Within the NumberViewHolder class, create a void method called bind that accepts an int parameter called listIndex
