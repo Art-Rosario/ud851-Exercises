@@ -18,9 +18,15 @@ package com.example.android.implicitintents;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CalendarContract;
+import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -67,9 +73,10 @@ public class MainActivity extends AppCompatActivity {
      */
     public void onClickShareTextButton(View v) {
         // TODO (5) Specify a String you'd like to share
-
+        String textShared = "Message to share";
         // TODO (6) Replace the Toast with shareText, passing in the String from step 5
-        Toast.makeText(this, "TODO: Share text when this is clicked", Toast.LENGTH_LONG).show();
+       // Toast.makeText(this, "TODO: Share text when this is clicked", Toast.LENGTH_LONG).show();
+        shareText(textShared);
     }
 
     /**
@@ -82,10 +89,14 @@ public class MainActivity extends AppCompatActivity {
      * @param v Button that was clicked.
      */
     public void createYourOwn(View v) {
-        Toast.makeText(this,
-                "TODO: Create Your Own Implicit Intent",
-                Toast.LENGTH_SHORT)
-                .show();
+        Calendar cal = new GregorianCalendar();
+        cal.setTime(new Date());
+        cal.add(Calendar.MONTH, 2);
+        //Toast.makeText(this,
+        //          "TODO: Create Your Own Implicit Intent",
+        //        Toast.LENGTH_SHORT)
+        //       .show();
+        addCalendar("NEW EVENT TEST","NYC", cal.getTime().getTime() + 0, cal.getTime().getTime() + 600000);
     }
 
     /**
@@ -144,11 +155,36 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // TODO (1) Create a void method called shareText that accepts a String as a parameter
-    // Do steps 2 - 4 within the shareText method
+    private void shareText(String text) {
+        // Do steps 2 - 4 within the shareText method
 
         // TODO (2) Create a String variable called mimeType and set it to "text/plain"
+        String mimeType = "text/plain";
 
         // TODO (3) Create a title for the chooser window that will pop up
+        String title = "Title";
 
         // TODO (4) Use ShareCompat.IntentBuilder to build the Intent and start the chooser
+        ShareCompat.IntentBuilder.from(this)
+                .setChooserTitle(title)
+                .setType(mimeType)
+                .setText(text)
+                .startChooser();
+
+
+    }
+
+
+
+    private void addCalendar(String title, String location, long begin, long end) {
+        Intent intent = new Intent(Intent.ACTION_INSERT)
+                .setData(CalendarContract.Events.CONTENT_URI)
+                .putExtra(CalendarContract.Events.TITLE, title)
+                .putExtra(CalendarContract.Events.EVENT_LOCATION, location)
+                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, begin)
+                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME,end);
+        if(intent.resolveActivity(getPackageManager()) != null){
+            startActivity(intent);
+        }
+    }
 }

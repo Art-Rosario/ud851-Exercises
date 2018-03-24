@@ -17,12 +17,20 @@ package com.example.android.implicitintents;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.CalendarContract;
+import android.provider.ContactsContract;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.app.ShareCompat.IntentBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -187,4 +195,6 @@ public class MainActivity extends AppCompatActivity {
                 .setText(textToShare)
                 .startChooser();
     }
+
+
 }
