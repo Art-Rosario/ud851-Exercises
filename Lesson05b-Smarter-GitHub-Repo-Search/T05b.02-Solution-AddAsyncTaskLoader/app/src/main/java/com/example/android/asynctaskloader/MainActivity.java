@@ -107,10 +107,7 @@ public class MainActivity extends AppCompatActivity implements
          * of convenience. There are other ways of achieving this same result, but we felt this
          * was the simplest.
          */
-        if (TextUtils.isEmpty(githubQuery)) {
-            mUrlDisplayTextView.setText("No query entered, nothing to search for.");
-            return;
-        }
+
 
         URL githubSearchUrl = NetworkUtils.buildUrl(githubQuery);
         mUrlDisplayTextView.setText(githubSearchUrl.toString());
